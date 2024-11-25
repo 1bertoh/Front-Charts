@@ -1,6 +1,5 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
 import { CartesianGrid, LabelList, Line, LineChart, ResponsiveContainer, XAxis } from "recharts"
 
 import {
@@ -24,7 +23,7 @@ export function SimpleLineChart(props: TProps) {
             ...config,
             [y]: {
                 label: y.toUpperCase(),
-                color: `hsl(var(--chart-${index + 1}))`, // Define uma cor diferente para cada ponto
+                color: `hsl(var(--chart-${index + 1}))`, 
             },
         } satisfies ChartConfig;
     }, {});

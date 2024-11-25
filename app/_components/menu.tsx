@@ -8,8 +8,8 @@ type TMenu = {
 
 const Menu = (props: TMenu) => {
     const { onChange, value } = props
-    const [isVisible, setIsVisible] = useState(true); // Controla a visibilidade do menu
-    const [lastScrollY, setLastScrollY] = useState(0); // Guarda a última posição de rolagem
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0); 
     const selectItems = [
         { value: "all", content: "Todos" },
         { value: "2011", content: "2011" },
@@ -21,23 +21,18 @@ const Menu = (props: TMenu) => {
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
 
-
-        // Se o usuário rolar para baixo, esconder o menu. Se rolar para cima, mostrar o menu.
         if (currentScrollY > lastScrollY) {
             setIsVisible(false);
         } else {
             setIsVisible(true);
         }
 
-        // Atualiza a última posição de rolagem
         setLastScrollY(currentScrollY);
     };
 
     useEffect(() => {
-        // Adiciona o listener de rolagem
         window.addEventListener("scroll", handleScroll);
 
-        // Remove o listener ao desmontar o componente
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };

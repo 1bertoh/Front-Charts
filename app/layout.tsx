@@ -49,7 +49,7 @@ export default function RootLayout({
             light: darkTheme.className,
             dark: darkTheme.className,
           }}
-          enableSystem={true} // Permite que o tema do sistema seja detectado
+          enableSystem={true}
         >
           <NextUIProvider>
             {children}

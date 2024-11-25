@@ -26,7 +26,7 @@ export default function Home() {
     const fetch = async () => {
       
       const response = await axios.get(
-        `http://127.0.0.1:8000/`,
+        `https://back-chart.onrender.com`,
       );
       const r: General_Request = response.data
       setResponse(r)
@@ -75,14 +75,6 @@ export default function Home() {
         <Divider className="bg-slate-200" />
         <SpecificSales chartValue={{ agent: responseFilter?.Sales_by_Agent, client: responseFilter?.Sales_by_Client }} filterValue={specificSalesFilterValue} onChange={setSpecificSalesFilterValue} />
         <div className="max-h-[400px]">
-          {/*
-            Distribuição geográfica das vendas (PAIS, UFCLI, CIDCLI).
-            Rosca
-
-          */}
-          {/* <CardChart >
-            <SimpleBarChart height='400px' width="100%"/>
-          </CardChart> */}
         </div>
       </div>
     </>
@@ -95,21 +87,10 @@ type TSBP = {
   onChange: Function
 }
 const SellByPeriod = (props: TSBP) => {
-  const { onChange, filterValue: { granularity }, chartValue } = props
-  const selectItems = [
-    { value: "dayly", content: "Dia" },
-    { value: "weekly", content: "Semana" },
-    { value: "monthly", content: "Mês" },
-    { value: "yearly", content: "Ano" },
-  ]
-  console.log(chartValue, "grafico do  primeiro")
+  const { chartValue } = props
 
   return (
     <div className="">
-      {/*
-          Total de  (diário, mensal, anual).
-          UM CHECK PARA EXIBIR OS DESCONTOS
-        */}
       <CardChart title="Vendas por período">
         <div className="h-[600px]">
           <SimpleLineChart chartData={chartValue} xAxis="Interval" yAxis={["Total_Sales"]} />
@@ -125,7 +106,7 @@ type TVC = {
   onChange: Function
 }
 const ValuesComparison = (props: TVC) => {
-  const { onChange, filterValue: { comparison, granularity }, chartValue } = props;
+  const { onChange, filterValue: { comparison }, chartValue } = props;
 
   const getComparisonFields = () => {
     switch (comparison) {
@@ -142,7 +123,6 @@ const ValuesComparison = (props: TVC) => {
   }
 
   useEffect(() => {
-    console.log(comparison, 'comparison')
   }, [comparison])
 
   const selectItemsComparison = [
@@ -159,12 +139,6 @@ const ValuesComparison = (props: TVC) => {
 
   return (
     <div className="">
-      {/*
-          bARRAS DUPLAS
-          Brarras indicando valore com e sem ipi
-          barras indicando valor com e sem desconto
-          alternar entre as opções
-        */}
       <CardChart title="Comparação de valores">
         <div className="h-[600px]">
           <div className="mb-3">
@@ -192,11 +166,9 @@ const SpecificSales = (props: TSS) => {
   const getSales = () => {
     switch (salesBy) {
       case "client":
-        console.log(client, "testejjkdjk cliente")
         return client
       case "agent":
 
-        console.log(agent, 'testejjkdjk agente')
         return agent
 
       default:
@@ -206,12 +178,6 @@ const SpecificSales = (props: TSS) => {
 
   return (
     <div className="">
-      {/*
-          UM SELECT PRA TROCAR ENTRE:
-          Vendas por cliente (NOMECLI, UFCLI, CIDCLI).
-          Vendas por representante (CODREPRM, NOMEREP).
-          Distribuição geográfica das vendas (PAIS, UFCLI, CIDCLI).
-        */}
       <CardChart title="Vendas específicas">
         <div className="h-[600px]">
           <div className="mb-3">
