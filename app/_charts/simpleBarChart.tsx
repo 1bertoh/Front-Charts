@@ -38,7 +38,6 @@ export function SimpleBarChart(props: TProps) {
                         tickLine={false}
                         tickMargin={10}
                         axisLine={false}
-                        tickFormatter={(value) => value.slice(0, 3)}
                     />
                     <ChartTooltip
                         cursor={false}
