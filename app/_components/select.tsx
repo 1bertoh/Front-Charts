@@ -3,7 +3,7 @@ import React from 'react'
 
 type Props = {
     label: string;
-    onChange: Function;
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => object;
     items: { value: string; content: string }[];
     value: string | number
 }

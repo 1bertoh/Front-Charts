@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/chart"
 
 type TProps = {
-    chartData:{}[];
+    chartData:object[];
     xAxis: string;
     yAxis:string[];
 }
@@ -18,7 +18,7 @@ type TProps = {
 export function SimpleBarChart(props: TProps) {
     const { chartData, xAxis, yAxis } = props;
 
-    const chartConfig: any = yAxis?.reduce((config, y, index) => {
+    const chartConfig = yAxis?.reduce((config, y, index) => {
         return {
             ...config,
             [y]: {
@@ -45,7 +45,7 @@ export function SimpleBarChart(props: TProps) {
                         content={<ChartTooltipContent indicator="dashed" />}
                     />
                     {
-                        yAxis?.map((y, index) => (
+                        yAxis?.map((y) => (
                             <Bar key={y} dataKey={y} fill={`var(--color-${y})`} radius={4} />
                         ))
                     }

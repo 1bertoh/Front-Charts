@@ -12,13 +12,13 @@ import {
 type TProps = {
     yAxis: string[];
     xAxis: string;
-    chartData: {}[]
+    chartData: object[]
 }
 
 export function SimpleLineChart(props: TProps) {
     const { chartData, xAxis, yAxis } = props;
 
-    const chartConfig: any = yAxis?.reduce((config, y, index) => {
+    const chartConfig = yAxis?.reduce((config, y, index) => {
         return {
             ...config,
             [y]: {

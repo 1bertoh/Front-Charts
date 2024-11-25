@@ -1,9 +1,7 @@
 import { CircularProgress } from '@nextui-org/progress'
 import React from 'react'
 
-type Props = {}
-
-const Loading = (props: Props) => {
+const Loading = () => {
   return (
     <CircularProgress label="Loading..." color='success' size='lg' />
   )

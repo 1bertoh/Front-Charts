@@ -5,7 +5,7 @@ import { SimpleLineChart } from "./_charts/simpleLineChart";
 import { Divider } from "@nextui-org/divider";
 import Menu from "./_components/menu";
 import Select from "./_components/select";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import { General_Request, Sales_by_Agent, Sales_by_Client, Total_Sales_and_Discounts } from "@/types/types";
 import Table from "./_components/table";
@@ -42,7 +42,7 @@ export default function Home() {
 
     if (year.year == "all") return setResponseFilter(response);
 
-    setResponseFilter((previous) => {
+    setResponseFilter(() => {
       setIsLoading(true)
 
       const filtering =  {
@@ -84,7 +84,7 @@ export default function Home() {
 type TSBP = {
   filterValue: { granularity: string };
   chartValue: Total_Sales_and_Discounts[];
-  onChange: Function
+  onChange: Dispatch<SetStateAction<{ granularity: string; }>>
 }
 const SellByPeriod = (props: TSBP) => {
   const { chartValue } = props
@@ -103,7 +103,7 @@ const SellByPeriod = (props: TSBP) => {
 type TVC = {
   filterValue: { granularity: string; comparison: string };
   chartValue: Total_Sales_and_Discounts[];
-  onChange: Function
+  onChange: Dispatch<SetStateAction<{ granularity: string; comparison: string; }>>
 }
 const ValuesComparison = (props: TVC) => {
   const { onChange, filterValue: { comparison }, chartValue } = props;
@@ -130,19 +130,15 @@ const ValuesComparison = (props: TVC) => {
     { value: "discount", content: "Com Disconto VS Sem Disconto" },
   ]
 
-  const selectItemsPeriod = [
-    { value: "dayly", content: "Dia" },
-    { value: "weekly", content: "Semana" },
-    { value: "monthly", content: "Mês" },
-    { value: "yearly", content: "Ano" },
-  ]
-
   return (
     <div className="">
       <CardChart title="Comparação de valores">
         <div className="h-[600px]">
           <div className="mb-3">
-            <Select items={selectItemsComparison} value={comparison} label="Escolha uma Comparação" onChange={(value: any) => onChange({ ...props.filterValue, comparison: value.target.value })} />
+            <Select items={selectItemsComparison} value={comparison} label="Escolha uma Comparação" onChange={(value: React.ChangeEvent<HTMLSelectElement>) => {
+              onChange({ ...props.filterValue, comparison: value.target.value })
+              return {}  
+            }} />
           </div>
           <SimpleBarChart chartData={chartValue} xAxis="Interval" yAxis={getComparisonFields()} />
         </div>
@@ -154,7 +150,7 @@ const ValuesComparison = (props: TVC) => {
 type TSS = {
   filterValue: { salesBy: string };
   chartValue: { agent: Sales_by_Agent[], client: Sales_by_Client[] };
-  onChange: Function
+  onChange: Dispatch<SetStateAction<{ salesBy: string; }>>
 }
 const SpecificSales = (props: TSS) => {
   const { onChange, filterValue: { salesBy }, chartValue: { agent, client } } = props;
@@ -181,7 +177,10 @@ const SpecificSales = (props: TSS) => {
       <CardChart title="Vendas específicas">
         <div className="h-[600px]">
           <div className="mb-3">
-            <Select value={salesBy} items={selectItems} label="Escolha uma Visão" onChange={(value: any) => onChange({ salesBy: value.target.value })} />
+            <Select value={salesBy} items={selectItems} label="Escolha uma Visão" onChange={(value: React.ChangeEvent<HTMLSelectElement>) => {
+              onChange({ salesBy: value.target.value })
+              return {}  
+            }} />
           </div>
           {
             client && client.length ?
